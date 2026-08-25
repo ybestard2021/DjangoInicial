@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Listado de Items{% endblock %}
+
+{% block content %}
+    <h2>Listado de Items</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Fecha de creación</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.description }}</td>
+                <td>{{ item.created_at }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">No hay items registrados.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,18 @@
+[25/Aug/2026 16:01:34] "GET / HTTP/1.1" 200 653
+[25/Aug/2026 16:01:34,065] - Broken pipe from ('127.0.0.1', 51730)
+[25/Aug/2026 16:01:45] "GET / HTTP/1.1" 200 653
+[25/Aug/2026 16:01:45] "GET /components/ HTTP/1.1" 200 1739
+[25/Aug/2026 16:01:45] "GET /components/nuevo/ HTTP/1.1" 200 1486
+[25/Aug/2026 16:01:45,934] - Broken pipe from ('127.0.0.1', 55742)
+[25/Aug/2026 16:01:55] "GET /components/nuevo/ HTTP/1.1" 200 1486
+[25/Aug/2026 16:01:55] "POST /components/nuevo/ HTTP/1.1" 302 0
+[25/Aug/2026 16:01:55,822] - Broken pipe from ('127.0.0.1', 62057)
+[25/Aug/2026 16:02:05] "GET /components/nuevo/ HTTP/1.1" 200 1486
+[25/Aug/2026 16:02:05] "POST /components/nuevo/ HTTP/1.1" 302 0
+[25/Aug/2026 16:02:05,112] - Broken pipe from ('127.0.0.1', 58730)
+[25/Aug/2026 16:02:14] "GET /components/nuevo/ HTTP/1.1" 200 1486
+[25/Aug/2026 16:02:14] "POST /components/nuevo/ HTTP/1.1" 302 0
+[25/Aug/2026 16:02:14,573] - Broken pipe from ('127.0.0.1', 58758)
+[25/Aug/2026 16:02:30] "GET /components/nuevo/ HTTP/1.1" 200 1486
+[25/Aug/2026 16:02:30] "POST /components/nuevo/ HTTP/1.1" 302 0
+[25/Aug/2026 16:02:35] "GET /components/ HTTP/1.1" 200 2611

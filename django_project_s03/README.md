@@ -66,7 +66,9 @@ django_project_s03/
         ├── migrations/
         ├── templates/
         │   ├── base.html
-        │   └── core/item_list.html
+        │   └── core/
+        │       ├── item_list.html
+        │       └── item_form.html
         ├── admin.py
         ├── models.py
         ├── urls.py
@@ -438,7 +440,108 @@ Para practicar en `python manage.py shell`:
 7. Modificar un Item mediante ORM.
 8. Eliminar un Item mediante ORM.
 
-## 18. Semana 2 vs. Semana 3
+## 18. Registro de Items desde la aplicación web
+
+Además de crear `Item` desde el Admin o el Shell, ahora existe un
+formulario web simple para insertar un nuevo `Item` sin salir de la
+aplicación:
+
+- `http://127.0.0.1:8000/` — Listado, con un botón **Nuevo Item**.
+- `http://127.0.0.1:8000/nuevo/` — Formulario de alta (`item_create`).
+
+Este ejercicio usa a propósito un `<form>` HTML plano y `request.POST`
+en vez de un `ModelForm`, para que la llamada a `Item.objects.create()`
+quede completamente visible en `core/views.py`.
+
+**FLUJO GET** (abrir el formulario)
+
+```text
+Navegador
+   ↓
+GET /nuevo/
+   ↓
+core/urls.py
+   ↓
+item_create()
+   ↓
+item_form.html
+   ↓
+Formulario
+```
+
+**FLUJO POST** (guardar el Item)
+
+```text
+Formulario
+   ↓
+POST /nuevo/
+   ↓
+core/urls.py
+   ↓
+item_create()
+   ↓
+request.POST
+   ↓
+Item.objects.create(...)
+   ↓
+Manager
+   ↓
+Django ORM
+   ↓
+INSERT
+   ↓
+SQLite
+   ↓
+redirect
+   ↓
+Listado actualizado
+```
+
+Si el campo `name` llega vacío, la View **no** llama a
+`Item.objects.create()`: vuelve a mostrar `item_form.html` con el
+mensaje "El nombre es obligatorio." y lo escrito hasta el momento.
+
+### ¿Qué hace `Item.objects.create()`?
+
+```python
+# ORM: Django convierte esta operación Python en un INSERT SQL
+# que finalmente ejecutará SQLite.
+Item.objects.create(
+    name=name,
+    description=description
+)
+```
+
+- **`Item`** = el Model — la entidad/tabla.
+- **`objects`** = el Manager — el punto de acceso al ORM para ese Model.
+- **`create(...)`** = método del Manager que construye el objeto **y**
+  lo guarda de inmediato (equivale a `Item(...)` + `.save()` en un solo
+  paso).
+- **ORM** = traduce esa llamada Python a SQL.
+- **SQLite** = ejecuta el `INSERT` y almacena el registro.
+
+Conceptualmente (no se escribe en el código, solo para entender qué
+hace el ORM por debajo):
+
+```sql
+INSERT INTO core_item (name, description, created_at)
+VALUES (...);
+```
+
+Nosotros escribimos Python; Django ORM genera el SQL; SQLite lo
+ejecuta. En ningún momento la aplicación usa `cursor`, SQL manual ni
+librerías externas.
+
+### ¿Por qué no hizo falta una migración?
+
+`core/models.py` no cambió: el modelo `Item` ya tenía los campos
+`name`, `description` y `created_at` desde la Semana 2. Agregar una
+View y un formulario no requiere una migración porque la estructura del
+modelo `Item` no cambió — las migraciones solo son necesarias cuando
+cambia la forma de la tabla (campos nuevos, tipos, etc.), no cuando se
+agrega código que usa el modelo existente.
+
+## 19. Semana 2 vs. Semana 3
 
 ```text
 Semana 2                          Semana 3

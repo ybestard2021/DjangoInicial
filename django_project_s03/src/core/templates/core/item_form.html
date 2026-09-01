@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Nuevo Item{% endblock %}
+
+{% block content %}
+    <h2 class="mb-3">Nuevo Item</h2>
+
+    {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="name" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ name|default:'' }}">
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Descripción</label>
+            <textarea class="form-control" id="description" name="description" rows="3">{{ description|default:'' }}</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="{% url 'item_list' %}" class="btn btn-outline-secondary">Cancelar</a>
+    </form>
+{% endblock %}
